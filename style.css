@@ -1,0 +1,13 @@
+html, body, h1,p,div,table,form,input {
+    margin: 1px;
+    padding: 0;
+}
+/*ヘッダー*/
+.pageTitle {
+    margin: 0;
+    color: royalblue;
+}
+/*メイン*/
+.newTaskTitle {
+    color: blueviolet;
+}

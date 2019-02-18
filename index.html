@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>課題１ToDoリスト<</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--ヘッダー-->
+    <h1 class="pageTitle">ToDoリスト</h1>
+    <!-- メインコンテンツ -->
+    <table> 　
+            <tr> 　　
+                <td><form id="radioGroup">
+                        <input type="radio" name="condition" value="all" checked>すべて
+                        <input type="radio" name="condition" value="working">作業中
+                        <input type="radio" name="condition" value="completion">完了
+                    </form>
+                 </td>
+                <td><p class="nowDisplay">：<span class="number">0</span>件を表示中</p></td>
+            </tr>
+            <!--ここの行の間に隙間？-->
+            <tr>
+               <td><table>
+                        <tr>
+                            <th>ID</th><th>コメント</th><th>状態</th><th>-</th>
+                        </tr>
+                        <tr>
+                            <td>0</td><td>タスク１</td><td><input type="button" name="" value="作業中"></td><td><input type="button" name="" value="削除"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td><td>タスク２</td><td><input type="button" name="" value="作業中"></td><td><input type="button" name="" value="削除"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td><td>タスク３</td><td><input type="button" name="" value="完了"></td><td><input type="button" name="" value="削除"></td>
+                        </tr>
+                    </table>
+                </td>
+                <th></th>
+           </tr>
+    </table>
+    <!--タスク追加-->
+    <h2 class="newTaskTitle">新規タスクの追加</h2>   
+    <input type="text" name="newTaskName" size ="10" value="">
+    <input type="button" name="addTaskBtn" value="追加">
+</body>
+</html>
+<!--
+<html lang ="ja">
+    <head>
+        <title> 課題１ToDoリスト</title>
+        <meta http-equiv ="Content-Type" content="text/html;charset=UTF-8">
+        <style type="text/css">
+        *{
+            position:relative;
+        }
+        #display{
+            display:table;
+        }
+        .num{
+            display:table-cell; 
+            width:50px;
+            height:50px;
+            /*画像指定ミス？
+            background: url('bg.num.png');
+            */
+            /*bg.num.pngを自作し(40px x 40px)、no-repeat centerを追加してみた*/
+            background:no-repeat center url('bg.num.png');
+            text-align: center;
+            vertical-align:middle;
+            cursor:pointer;
+            font-weight:bold;
+         }
+         </style>
+         <script>
+             //ゲーム ステータス を 表示 する SPAN
+             var spanStatus;
+             //ゲーム 時間 を 表示 する SPAN
+             var spanMyTime;
+             //数字 を 表示 する DIV 
+             var divDisplay; 
+             //経過 時間 の Timer 
+             var timer; 
+             //初期 処理（ 各種 DOM を 取得） 
+             function init(){ 　
+                //ゲーム ステータス を 表示 する SPAN を 取得
+                spanStatus = document.getElementById("status");
+                　// ゲーム 時間 を 表示 する SPAN を 取得 　 
+                spanMyTime = document.getElementById("mytime"); 　 　
+                // 数字 を 表示 する DIV を 取得 　 
+                divDisplay = document.getElementById("display"); 
+                }
+                //画面 の 数字 を ランダム 表示 
+                function loadDisplay(){ 　
+                    // Display を クリア する 処理 　 
+                    while(divDisplay.hasChildNodes()){
+                        // 子 要素 を 削除 　 　 
+                        divDisplay.removeChild(divDisplay.lastChild);
+                         　} 　 　
+                        // 数字 の 個数 を 取得 する 　 
+                        var textbox = document.getElementById("numSize"); 　 
+                        var size = parseInt(textbox.value); 　 　
+                        // Display に ランダム の 数字 を 表示 する 　 
+                        for( var i = 0 ; i < size; i ++){ 　 　　
+                            // DIV を 作成 　 　 
+                            var div = document.createElement("div"); 　 　 　　
+                            // ランダム の 数字 を 作成 　 　 
+                            var rnd = Math.floor( Math.random() * 100); 　 　 　　
+                            // CSS を 適用 　 　 
+                            div.className="num"; 　 　 　　
+                            // イベント を 追加 　 　 
+                            div.addEventListener("click",clickNum,false); 　 　 　　
+                            // 値 を 表示 　 　 
+                            div.innerHTML = rnd; 　 　 　　
+                            // display に 表示 　 　 
+                            divDisplay.appendChild(div);
+                        }
+                    } 
+
+                    //数字 を クリック する と 実行 
+                    function clickNum(evt){ 　
+                        // クリック し た DIV 　 
+                        var div = evt.target; 　 　
+                        // クリック し た 数字 　 
+                        var num = parseInt( div.innerHTML); 　 　
+                        // 全て の DIV を 取得 　 
+                        divs = document. getElementsByClassName("num"); 　 　
+                        // 全て の DIV を 検証 する 　 　 
+                        for( var i = 0 ; i < divs. length ; i ++){ 　 　 　　
+                            // 小さい 数字 が ある 場合 　 　 
+                            if(parseInt(divs[i].innerHTML) < num){ 　 　 　 
+                                alert("NG");
+                                return; 　　
+                            } 　
+                    } 　
+                    // 正しい 選択 の 場合、 数字 を 100 に する 　 
+                    div.innerHTML = 100; 　
+                    // 全て 100 か チェック する フラグ 　 
+                    var isEnd = true; 　
+                    // 全て 100 なら 終了 　 
+                    for( var i = 0 ; i < divs.length ; i ++){ 　 　 　　
+                        // 100 か チェック 　 　 
+                        if( parseInt( divs[ i].innerHTML) != 100){ 　 　 　 
+                            isEnd = false; 　 　 　 
+                            break; 　　
+                        } 　
+                    } 　
+                    // 全て 100 か チェック する
+                 　 if( isEnd){ 　　
+                     // 終了 　 　 
+                     alert("終了"); 　 　 
+                     stopGame();
+                    }
+                }
+                //ゲーム を 開始 
+                function startGame(){ 　
+                    // 既に 開始 し て いる 場合 は、 何 も し ない 　 
+                    if( timer != null){ 　 　 
+                        return; 　
+                    } 　
+                // ステータス を ゲーム 中 へ 変更 　 
+                spanStatus. innerHTML = "ゲーム 中"; 　
+                // 経過 時間 を 0 に する 　 
+                spanMyTime. innerHTML = 0; 　 　
+                // 経過 時間 を 開始 する
+                timer = setInterval(interval , 1000); 　 　
+                // 数字 を 表示 　 
+                loadDisplay(); 
+                } 
+                //ゲーム を 終了 
+                function stopGame(){ 　
+                    // ステータス を 停止 へ 変更 　 
+                    spanStatus.innerHTML = "停止"; 　 　 
+                    if( timer != null){
+                        clearInterval(timer); 　
+                    } 　
+                    // timer に null を 代入 する 　 
+                    timer = null; 
+                    } 
+                    //ゲーム 経過 時間 を 表示 
+                    function interval(){ 　
+                        // 経過 時間 を 表示 　 
+                        spanMyTime.innerHTML = parseInt(spanMyTime.innerHTML)+ 1; 
+                        } 
+            </script>
+            </head>
+            <body onload ="init()">
+                <table> 　
+                    <tr> 　　
+                        <td> 数字 の 個数 </td>
+                        <td><input type ="text" id ="numSize" size ="5" value ="10"/>個 </td >
+                   　</tr >
+                    <tr> 　　
+                        <td> ステータス </td><td><span id="status"> 停止 </span></td> 　
+                    </tr>
+                    <tr>
+                        <td> 操作 </td><td><a href="javascript:startGame()">start </a>
+                            　<a href="javascript:stopGame()"> stop </a></td>
+                    </tr>
+                    <tr>
+                        <td> 経過 時間 </td><td><span id="mytime"> 0 </span> 秒 </td>
+                    </tr>
+                 </table>
+                 <div id ="display"></div>
+    </body > 
+</html>
+-->                        
+                 
+
+
+
+
+
