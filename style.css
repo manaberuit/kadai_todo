@@ -8,6 +8,9 @@ html, body, h1,p,div,table,form,input {
     color: royalblue;
 }
 /*メイン*/
+.number {
+    color: red;
+}
 .newTaskTitle {
     color: blueviolet;
 }
